@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Synchronized Clock</title>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="event-timeline.js" defer></script>
+    <script src="main.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            transition: background-color 1s ease-in-out;
+        }
+        .clock {
+            font-size: 15em;
+            margin-top: 20vh;
+            color: black;
+            transition: color 1s ease-in-out;
+        }
+
+        .bg-blue {
+            background: lightblue;
+        }
+        .bg-red {
+            background: darkred;
+        }
+        .bg-black {
+            background: black;
+        }
+        .bg-white {
+            background: white;
+        }
+        .bg-yellow {
+            background: yellow;
+        }
+        .bg-grey {
+            background: slategray;
+        }
+        .bg-green {
+            background: darkgreen;
+        }
+        .textcolour-black {
+            color: black;
+        }
+        .textcolour-white {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock" id="clock">00:00:00.000</div>
+</body>
+</html>
