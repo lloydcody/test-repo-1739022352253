@@ -27,8 +27,29 @@ window.addEventListener('DOMContentLoaded', function () {
         function updateClock() {
             const now = ts.now();
             const date = new Date(now);
-            document.getElementById('clock').innerText = date.toISOString().substr(11, 12);
-            requestAnimationFrame(updateClock);
+            let time = date.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3 }).substr(0,12);
+            if (window.globalSettings.formatAsLocalTime) {
+                time = date.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3 }).substr(0,12);
+            } else {
+                time = date.toISOString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3 }).substr(11,12);
+            }
+
+            if (window.globalSettings['clockPrecisionLevel'] == 'Milliseconds') {
+                document.getElementById('clock').innerText = time.substr(0,12);
+                requestAnimationFrame(updateClock);
+            } else if (window.globalSettings['clockPrecisionLevel'] == 'Hundredths') {
+                document.getElementById('clock').innerText = time.substr(0, 11);
+                requestAnimationFrame(updateClock);
+            } else if (window.globalSettings['clockPrecisionLevel'] == 'Tenths') {
+                document.getElementById('clock').innerText = time.substr(0, 10);
+                requestAnimationFrame(updateClock);
+            } else if (window.globalSettings['clockPrecisionLevel'] == 'Seconds') {
+                document.getElementById('clock').innerText = time.substr(0, 8);
+                setTimeout(updateClock, 100);
+            } else {
+                document.getElementById('clock').innerText = time.substr(0, 5);
+                setTimeout(updateClock, 1000);
+            }
         }
         
         ts.on('sync', () => {
