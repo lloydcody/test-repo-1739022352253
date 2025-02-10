@@ -9,6 +9,16 @@ function loadScript(src, callback) {
 }
 
 window.addEventListener('DOMContentLoaded', function () {
+    // Get the 'leftoffset' hash parameter from the URL
+    const urlParams = new URLSearchParams(window.location.hash.substring(1));
+    const leftOffset = urlParams.get('leftoffset');
+
+    // Check if leftOffset is a valid number and set the left CSS property
+    if (leftOffset !== null && !isNaN(leftOffset)) {
+        const pc = document.querySelector('.page-container');  // Replace with your element's selector
+        pc.style.left = `-${leftOffset}px`;  // Apply the negative offset to crop it
+    }
+
     loadScript("https://unpkg.com/timesync@1.0.11/dist/timesync.min.js", function () {
         if (typeof timesync === 'undefined') {
             console.error('Timesync library failed to load.');
@@ -17,7 +27,10 @@ window.addEventListener('DOMContentLoaded', function () {
         
         const ts = timesync.create({
             server: 'https://time.ddmb.au/timesync',
-            interval: 60000
+            interval: 60000,
+            delay: 2000,
+            repeat: 5,
+            timeout: 2000
         });
         
         ts.on('change', function (offset) {

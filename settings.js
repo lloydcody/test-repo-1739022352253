@@ -25,7 +25,7 @@ class ClockSyncSettings {
     await loadGoogleSheetsAPI();
     await this.loadSettings();
     // checkForChanges(new Date().toISOString());
-    setTimeout(init, 10000);
+    setTimeout(init, 120000);
   }
 
   async loadSettings() {
@@ -68,22 +68,3 @@ function init() {
   });
 }
 init();
-
-// async function checkForChanges(lastCheck) {
-//   const url = "https://script.googleusercontent.com/macros/echo?user_content_key=976_5VFKm5flLFTJD3d7uUJWjsk4lCI30Zjtm_mpPa0H0uE8n4bAduQeG_FoCy0iJ637pG5v2zPemHHhT6cAyyp6onzIkUfEm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnNPalnZ3oDW7qqH2tfBN_JJ9vlsWJXgl9z-lg1P_zjceuqteeCA_ylaWUgZ7A1OBcJcIW2Jh0r1vJkHNQwjZN_p2WjtX8aMj9Q&lib=MaAlVxzjDrmjf7ELzjoR8mOFjZ3tcwvDH";
-//   const response = await fetch(url, {
-//     method: "GET",
-//     mode: "cors",  // Allows cross-origin requests
-//     headers: {
-//       "Content-Type": "application/json"
-//     }
-//   });
-//   const data = await response.json();
-
-//   if (data.modifiedTime !== lastCheck) {
-//     console.log("Spreadsheet updated:", data.modifiedTime);
-//     document.location.reload();
-//   }
-
-//   setTimeout(() => checkForChanges(data.modifiedTime), 10000); // Poll every 10s
-// }
