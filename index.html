@@ -28,6 +28,7 @@
         }
 
         .clock {
+            opacity:0;
             position:fixed;
             top:0;
             left:0;
@@ -42,29 +43,32 @@
             font-family: Arial, sans-serif;
             text-align: center;
             vertical-align: center;
-            transition: color 1s ease-in-out, background-color 1s ease-in-out;
+            transition: color 1s ease-in-out, background-color 1s ease-in-out, opacity 0.5s ease-in-out;
+        }
+        .clock.visible {
+            opacity:1;
         }
 
         .bg-blue {
-            background: lightblue;
+            background-color: lightblue;
         }
         .bg-red {
-            background: darkred;
+            background-color: darkred;
         }
         .bg-black {
-            background: black;
+            background-color: black;
         }
         .bg-white {
-            background: white;
+            background-color: white;
         }
         .bg-yellow {
-            background: yellow;
+            background-color: yellow;
         }
         .bg-grey {
-            background: slategray;
+            background-color: slategray;
         }
         .bg-green {
-            background: darkgreen;
+            background-color: darkgreen;
         }
         .textcolour-black {
             color: black;
@@ -75,25 +79,31 @@
         #p4vid {
 
         }
-        .video-container {
+        .video {
             position:absolute;
             left:0;
             top:0;
             width:7680px;
             height:1080px;
             opacity:0;
-            transition: opacity 0.5s ease-in-out;
             z-index:20;
+            transition: opacity 0.5s ease-in-out;
         }
-        .video-playing {
+        .video.visible {
             opacity:1;
+        }
+        .video.video-playing {
+
+        }
+        .video.video-seek-to-10 {
+
         }
     </style>
 </head>
 <body>
     <div class="page-container">
         <div class="clock" id="clock">00:00:00.000</div>
-        <div id="p4vid" class="video-container">
+        <div id="p4vid" class="video">
             <video id="dmbvideo" src="p4dmb.mp4" muted style="width:7680px; height:1080px;"></video>
         </div>
     </div>

@@ -1,21 +1,23 @@
 const videoContainer = document.getElementById('p4vid');
 const video = document.getElementById('dmbvideo');
-const targetClass = 'video-playing'; // the class that triggers playback
 
 // Set up MutationObserver to listen for class changes
 const observer = new MutationObserver((mutationsList) => {
   mutationsList.forEach((mutation) => {
     if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-      // Check if the target class is added or removed
-      if (videoContainer.classList.contains(targetClass)) {
+
+      const seekRegex = /video-seek-to-(\d+)/; // Regex to capture the time value
+      const match = videoContainer.className.match(seekRegex);
+      if (match) {
+        const seekTime = parseInt(match[1], 10);
+        video.currentTime = seekTime; // Seek to extracted time
+      }
+
+      if (videoContainer.classList.contains('video-play')) {
         // Start the video playback when the class is added
-        video.currentTime = 0;
         video.play();
       } else {
-        // Wait for transition to end and then pause the video
-        videoContainer.addEventListener('transitionend', () => {
-          video.pause();
-        }, { once: true });
+        video.pause();
       }
     }
   });
