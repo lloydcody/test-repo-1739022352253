@@ -90,7 +90,7 @@ class AnimationTimeline {
     const cues = sequencerImportedCues.map(item => {
       return {
         key: item.key,
-        interval: new TIMINGSRC.Interval(item.time, item.time),
+        interval: new TIMINGSRC.Interval(item.time, ((item.time + 0.5) < rangeEndTime) ? (item.time + 0.5) : rangeEndTime),
         data: item
       };
     });
@@ -98,52 +98,22 @@ class AnimationTimeline {
     this.seq.on('change', (eArg, eInfo) => {
       console.log('Sequencer changed', eArg, eInfo);
       eArg.new.data.callback();
-      console.log('pos', this.timingSrc.pos);
+      // console.log('pos', this.timingSrc.pos);
     });
 
     this.timingSrc.on('change', () => {
       // const bgColor = getTimeColor(window.timing.pos);
       // document.body.style.backgroundColor = bgColor;
-      console.log('timingSrcObj change event.', this.timingSrc.pos);
+      // console.log('timingSrcObj change event.', this.timingSrc.pos);
+      // Find and execute missed cues
+      // cues.forEach(cue => {
+      //   if (cue.time > lastTime && cue.time <= newTime) {
+      //       cue.action(); // Manually trigger cue
+      //   }
+      // });
     });
 
     this.ds.update(cues);
-
-
-    // tempCues.forEach(cue => {
-    //     this.timingSrc.addCue(cue.time, cue.callback);
-    // });
-    /*
-        // Set up event triggers
-        this.events.forEach(event => {
-          this.timingSrc.on('change', () => {
-            const currentTime = this.timingSrc.pos % this.duration;
-            
-            // Check if we're at or just past this event's time
-            if (currentTime >= event.time && this.currentTime < event.time) {
-              // const element = document.querySelector(event.target);
-              // if (element) {
-              //   // Remove specified classes
-              //   event.classesToRemove.forEach(className => {
-              //     element.classList.remove(className);
-              //   });
-                
-              //   // Add specified classes
-              //   event.classesToAdd.forEach(className => {
-              //     element.classList.add(className);
-              //   });
-              // }
-  
-              updateDom(event.target, event.classesToRemove, event.classesToAdd);
-            }
-            
-            this.currentTime = currentTime;
-          });
-        });
-        */
-
-    // Start the timeline
-    //   this.timingSrc.update({ position: 0, velocity: 1 });
   }
 
   // Control methods
@@ -163,8 +133,6 @@ class AnimationTimeline {
     this.timingSrc.update({ position: timeInMs % this.duration });
   }
 }
-
-// Example usage:
 
 const timeline = new AnimationTimeline(
   '1vfigIVdQr1goZNtSGOEN_7fNANqh1ugZJ5cxypyTeag',
@@ -192,18 +160,18 @@ function updateDom(targetSelector, classNameToRemove, classNameToAdd) {
           className => className.startsWith(classNameToRemove.slice(0, -1))
         )
       );
-      console.log('Removed from', targetEl, 'class', classNameToRemove);
+      console.log(targetEl, 'Removed class', classNameToRemove);
     } else {
       targetEl.classList.remove(classNameToRemove);
-      console.log('Removed from', targetEl, 'class', classNameToRemove);
+      console.log(targetEl, 'Removed class:', classNameToRemove);
     }
   } else {
-    console.log('No classes given for removal on element', targetEl);
+    console.log(targetEl, 'Has no classes to remove');
   }
 
   if (classNameToAdd) {
     targetEl.classList.add(classNameToAdd);
   }
 
-  console.log(targetEl, 'now has the following classes:', targetEl.className);
+  console.log(targetEl, 'Now has classes:', targetEl.className);
 }
