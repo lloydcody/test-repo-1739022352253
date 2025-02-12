@@ -13,10 +13,28 @@ window.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.hash.substring(1));
     const leftOffset = urlParams.get('leftoffset');
 
+    // assign videos based on leftOffset
+    const video = document.getElementById('dmbvideo');
+    video.src = 'video1.mp4';
+
     // Check if leftOffset is a valid number and set the left CSS property
     if (leftOffset !== null && !isNaN(leftOffset)) {
         const pc = document.querySelector('.page-container');  // Replace with your element's selector
         pc.style.left = `-${leftOffset}px`;  // Apply the negative offset to crop it
+        video.src = 'video1.mp4';
+        if (parseInt(leftOffset) >= (1920*1)) {
+            video.src = 'video2.mp4';
+        }
+        if (parseInt(leftOffset) >= (1920*2)) {
+            video.src = 'video3.mp4';
+        }
+        if (parseInt(leftOffset) >= (1920*3)) {
+            video.src = 'video4.mp4';
+        }
+        video.muted = true;
+        video.style.display = 'fixed';
+        video.style.left = 0;
+        video.style.display = 0;
     }
 
     loadScript("https://unpkg.com/timesync@1.0.11/dist/timesync.min.js", function () {
