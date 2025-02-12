@@ -13,7 +13,7 @@ const observer = new MutationObserver((mutationsList) => {
         video.currentTime = seekTime; // Seek to extracted time
       }
 
-      if (videoContainer.classList.contains('video-play')) {
+      if (videoContainer.classList.contains('video-playing')) {
         // Start the video playback when the class is added
         video.play();
       } else {

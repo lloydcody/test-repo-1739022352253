@@ -21,7 +21,6 @@ window.addEventListener('DOMContentLoaded', function () {
     if (leftOffset !== null && !isNaN(leftOffset)) {
         const pc = document.querySelector('.page-container');  // Replace with your element's selector
         pc.style.left = `-${leftOffset}px`;  // Apply the negative offset to crop it
-        video.src = 'video1.mp4';
         if (parseInt(leftOffset) >= (1920*1)) {
             video.src = 'video2.mp4';
         }
@@ -32,9 +31,6 @@ window.addEventListener('DOMContentLoaded', function () {
             video.src = 'video4.mp4';
         }
         video.muted = true;
-        video.style.display = 'fixed';
-        video.style.left = 0;
-        video.style.display = 0;
     }
 
     loadScript("https://unpkg.com/timesync@1.0.11/dist/timesync.min.js", function () {
