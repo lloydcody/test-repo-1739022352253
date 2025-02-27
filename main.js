@@ -15,20 +15,20 @@ window.addEventListener('DOMContentLoaded', function () {
 
     // assign videos based on leftOffset
     const video = document.getElementById('dmbvideo');
-    video.src = 'video1.mp4';
+    video.src = 'p4feb28_1.mp4';
 
     // Check if leftOffset is a valid number and set the left CSS property
     if (leftOffset !== null && !isNaN(leftOffset)) {
         const pc = document.querySelector('.page-container');  // Replace with your element's selector
         pc.style.left = `-${leftOffset}px`;  // Apply the negative offset to crop it
-        if (parseInt(leftOffset) >= (1920*1)) {
-            video.src = 'video2.mp4';
+        if (parseInt(leftOffset) >= (1920 * 1)) {
+            video.src = 'p4feb28_2.mp4';
         }
-        if (parseInt(leftOffset) >= (1920*2)) {
-            video.src = 'video3.mp4';
+        if (parseInt(leftOffset) >= (1920 * 2)) {
+            video.src = 'p4feb28_3.mp4';
         }
-        if (parseInt(leftOffset) >= (1920*3)) {
-            video.src = 'video4.mp4';
+        if (parseInt(leftOffset) >= (1920 * 3)) {
+            video.src = 'p4feb28_4.mp4';
         }
         video.muted = true;
     }
@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', function () {
             console.error('Timesync library failed to load.');
             return;
         }
-        
+
         const ts = timesync.create({
             server: 'https://time.ddmb.au/timesync',
             interval: 60000,
@@ -46,23 +46,23 @@ window.addEventListener('DOMContentLoaded', function () {
             repeat: 5,
             timeout: 2000
         });
-        
+
         ts.on('change', function (offset) {
             // console.log('Time offset changed:', offset);
         });
-        
+
         function updateClock() {
             const now = ts.now();
             const date = new Date(now);
-            let time = date.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3 }).substr(0,12);
+            let time = date.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3 }).substr(0, 12);
             if (window.globalSettings.formatAsLocalTime) {
-                time = date.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3 }).substr(0,12);
+                time = date.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3 }).substr(0, 12);
             } else {
-                time = date.toISOString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3 }).substr(11,12);
+                time = date.toISOString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3 }).substr(11, 12);
             }
 
             if (window.globalSettings['clockPrecisionLevel'] == 'Milliseconds') {
-                document.getElementById('clock').innerText = time.substr(0,12);
+                document.getElementById('clock').innerText = time.substr(0, 12);
                 requestAnimationFrame(updateClock);
             } else if (window.globalSettings['clockPrecisionLevel'] == 'Hundredths') {
                 document.getElementById('clock').innerText = time.substr(0, 11);
@@ -78,30 +78,30 @@ window.addEventListener('DOMContentLoaded', function () {
                 setTimeout(updateClock, 1000);
             }
         }
-        
+
         ts.on('sync', () => {
             // console.log('Timesync complete');
             updateClock();
         });
 
         Object.defineProperty(window, 'ts', {
-            get: function() {
+            get: function () {
                 return ts;
             }
         });
 
         loadScript("https://webtiming.github.io/timingsrc/lib/timingsrc-v3.js", function () {
-            console.log(`Timingsrc version ${TIMINGSRC.version}!`);    
-        
+            console.log(`Timingsrc version ${TIMINGSRC.version}!`);
+
             if (typeof TIMINGSRC.TimingObject === 'undefined') {
                 console.error('TimingSrc library failed to load.');
                 return;
             }
-            
+
             ts.on('sync', () => {
                 const timeNow = ts.now();
                 console.log('Timesync set to', timeNow);
-                window.timingSrcObj.update({ position: (timeNow/1000), velocity: 1 });
+                window.timingSrcObj.update({ position: (timeNow / 1000), velocity: 1 });
             });
         });
     });
